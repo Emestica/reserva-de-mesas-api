@@ -12,7 +12,7 @@ class MenuController extends Controller
 {
     private string $clazz = MenuController::class;
 
-    public function getMenu(Request $request) : JsonResponse
+    public function getMenu(Request $request): JsonResponse
     {
         Log::info($this->clazz.'getMenu() => init');
 

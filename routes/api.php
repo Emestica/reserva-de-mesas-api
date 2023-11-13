@@ -46,3 +46,27 @@ Route::put('/update-tipo-menu/{id}',
     [\App\Http\Controllers\TipoMenuController::class, 'updateTipoMenu']);
 Route::put('/delete-tipo-menu/{id}',
     [\App\Http\Controllers\TipoMenuController::class, 'deleteTipoMenu']);
+
+/** TABLA PAISES */
+Route::get('/get-paises',
+    [\App\Http\Controllers\PaisesController::class, 'getPaises']);
+Route::post('/save-pais',
+    [\App\Http\Controllers\PaisesController::class, 'storePais']);
+Route::put('/update-pais/{id}',
+    [\App\Http\Controllers\PaisesController::class, 'updatePais']);
+Route::put('/delete-pais/{id}',
+    [\App\Http\Controllers\PaisesController::class, 'deletePais']);
+
+/** TABLA DEPARTAMENTOS */
+Route::get('/get-departamentos',
+    [\App\Http\Controllers\DepartamentosController::class, 'getDepartamentos']);
+Route::post('/save-departamento',
+    [\App\Http\Controllers\DepartamentosController::class, 'storeDepartamento']);
+Route::put('/update-departamento/{id}',
+    [\App\Http\Controllers\DepartamentosController::class, 'updateDepartamento']);
+Route::put('/delete-departamento/{id}',
+    [\App\Http\Controllers\DepartamentosController::class, 'deleteDepartamento']);
+
+/** TEST */
+Route::post('/client/register-user',
+    [\App\Http\Controllers\SecurityClientController::class, 'registerUserClient']);
