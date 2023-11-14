@@ -131,3 +131,6 @@ Route::put('/delete-mesa/{id}',
 /** TEST */
 Route::post('/client/register-user',
     [\App\Http\Controllers\SecurityClientController::class, 'registerUserClient']);
+
+Route::post('/mobile/register-user',
+    [\App\Http\Controllers\SecurityMobileController::class, 'registerUserMobile']);

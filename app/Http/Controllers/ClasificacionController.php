@@ -15,22 +15,22 @@ class ClasificacionController extends Controller
 
     public function getClasificaciones(Request $request):JsonResponse
     {
-        Log::info($this->clazz.'getClasificaciones() => init');
+        Log::info($this->clazz.'->getClasificaciones() => init');
 
         $option = $request->opcion;
         $estado = $request->estado;
         $idclasificacion = $request->idclasificacion;
 
-        Log::info($this->clazz.'getClasificaciones() => option: '.$option);
-        Log::info($this->clazz.'getClasificaciones() => estado: '.$estado);
-        Log::info($this->clazz.'getClasificaciones() => idclasificacion: '.$idclasificacion);
+        Log::info($this->clazz.'->getClasificaciones() => option: '.$option);
+        Log::info($this->clazz.'->getClasificaciones() => estado: '.$estado);
+        Log::info($this->clazz.'->getClasificaciones() => idclasificacion: '.$idclasificacion);
 
         try{
             switch ($option)
             {
                 case 1:
                     /** TRAE UN LISTADO DE CLASIFICACIONES POR ESTADO */
-                    Log::info($this->clazz.'getClasificaciones() => msg: TRAE UN LISTADO DE CLASIFICACIONES POR ESTADO');
+                    Log::info($this->clazz.'->getClasificaciones() => msg: TRAE UN LISTADO DE CLASIFICACIONES POR ESTADO');
 
                     $result = Clasificacion::query()->where(
                         'estado',
@@ -40,19 +40,19 @@ class ClasificacionController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
                     break;
                 case 2:
                     /** TRAE UN OBJETO DE CLASIFICACION POR ID */
-                    Log::info($this->clazz.'getClasificaciones() => msg: TRAE UN OBJETO DE CLASIFICACION POR ID');
+                    Log::info($this->clazz.'->getClasificaciones() => msg: TRAE UN OBJETO DE CLASIFICACION POR ID');
 
                     $result = Clasificacion::query()->where(
                         'id_clasificacion',
@@ -74,7 +74,7 @@ class ClasificacionController extends Controller
                     break;
                 default:
                     /** TRAE UN LISTADO COMPLETO DE CLASIFICACIONES SIN CONDICIONES */
-                    Log::info($this->clazz.'getClasificaciones() => msg: TRAE UN LISTADO COMPLETO DE CLASIFICACIONES SIN CONDICIONES');
+                    Log::info($this->clazz.'->getClasificaciones() => msg: TRAE UN LISTADO COMPLETO DE CLASIFICACIONES SIN CONDICIONES');
 
                     $result = Clasificacion::all();
 
@@ -93,7 +93,7 @@ class ClasificacionController extends Controller
             }
 
         } catch (\Throwable $throwable) {
-            Log::error($this->clazz.'getClasificaciones() => error: '.$throwable->getMessage());
+            Log::error($this->clazz.'->getClasificaciones() => error: '.$throwable->getMessage());
 
             return response()->json([
                 'error' => $throwable->getMessage()
@@ -103,7 +103,7 @@ class ClasificacionController extends Controller
 
     public function storeClasificacion(Request $request) : JsonResponse
     {
-        Log::info($this->clazz.'storeClasificacion() => init');
+        Log::info($this->clazz.'->storeClasificacion() => init');
         try {
             $validation = Validator::make($request->all(), [
                 'clasificacion' => 'required',
@@ -127,7 +127,7 @@ class ClasificacionController extends Controller
                 ]);
             }
         } catch (\Throwable $throwable) {
-            Log::error($this->clazz.'storeClasificacion() => error: '.$throwable->getMessage());
+            Log::error($this->clazz.'->storeClasificacion() => error: '.$throwable->getMessage());
 
             return response()->json([
                 'error' => $throwable->getMessage()
@@ -137,7 +137,7 @@ class ClasificacionController extends Controller
 
     public function updateClasificacion(Request $request, $id) : JsonResponse
     {
-        Log::info($this->clazz.'updateClasificacion() => init');
+        Log::info($this->clazz.'->updateClasificacion() => init');
         try {
             $validation = Validator::make($request->all(), [
                 'clasificacion' => 'required',
@@ -178,7 +178,7 @@ class ClasificacionController extends Controller
                 }
             }
         } catch (\Throwable $throwable) {
-            Log::error($this->clazz.'updateClasificacion() => error: '.$throwable->getMessage());
+            Log::error($this->clazz.'->updateClasificacion() => error: '.$throwable->getMessage());
 
             return response()->json([
                 'error' => $throwable->getMessage()
@@ -188,7 +188,7 @@ class ClasificacionController extends Controller
 
     public function deleteClasificacion($id) : JsonResponse
     {
-        Log::info($this->clazz.'deleteClasificacion() => init');
+        Log::info($this->clazz.'->deleteClasificacion() => init');
         try {
             $clasificacion = Clasificacion::find($id);
 
@@ -208,7 +208,7 @@ class ClasificacionController extends Controller
                 ]);
             }
         } catch (\Throwable $throwable) {
-            Log::error($this->clazz.'deleteClasificacion() => error: '.$throwable->getMessage());
+            Log::error($this->clazz.'->deleteClasificacion() => error: '.$throwable->getMessage());
 
             return response()->json([
                 'error' => $throwable->getMessage()
