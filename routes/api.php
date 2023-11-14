@@ -26,7 +26,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 /** TABLA MENU */
 Route::get('/get-menus',
-    [\App\Http\Controllers\MenuController::class, 'getMenu']);
+    [\App\Http\Controllers\MenuController::class, 'getMenus']);
+Route::post('/save-menu',
+    [\App\Http\Controllers\MenuController::class, 'storeMenu']);
+Route::put('/update-menu/{id}',
+    [\App\Http\Controllers\MenuController::class, 'updateMenu']);
+Route::put('/delete-menu/{id}',
+    [\App\Http\Controllers\MenuController::class, 'deleteMenu']);
 
 /** TABLA CLASIFICACIONES */
 Route::get('/get-clasificaciones',
@@ -127,6 +133,16 @@ Route::put('/update-mesa/{id}',
     [\App\Http\Controllers\TableController::class, 'updateTable']);
 Route::put('/delete-mesa/{id}',
     [\App\Http\Controllers\TableController::class, 'deleteTable']);
+
+/** TABLA RESERVACIONES */
+Route::get('/get-reservaciones',
+    [\App\Http\Controllers\ReservationController::class, 'getReservations']);
+Route::post('/save-reservacion',
+    [\App\Http\Controllers\ReservationController::class, 'storeReservation']);
+Route::put('/update-reservacion/{id}',
+    [\App\Http\Controllers\ReservationController::class, 'updateReservation']);
+Route::put('/delete-reservacion/{id}',
+    [\App\Http\Controllers\ReservationController::class, 'deleteReservation']);
 
 /** TEST */
 Route::post('/client/register-user',
