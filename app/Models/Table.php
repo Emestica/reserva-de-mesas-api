@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurantes extends Model
+class Table extends Model
 {
     use HasFactory;
 
@@ -14,14 +14,14 @@ class Restaurantes extends Model
      *
      * @var string
      */
-    protected $table = 'restaurantes';
+    protected $table = 'mesas';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_restaurante';
+    protected $primaryKey = 'id_mesa';
 
     /**
      * Indicates if the model should be timestamped.
@@ -36,15 +36,21 @@ class Restaurantes extends Model
      * @var array
      */
     protected $fillable = [
-        'id_municipio',
-        'nombre_legal',
-        'restaurante',
+        'id_restaurante',
+        'mesa',
         'descripcion',
-        'direccion',
-        'telefono',
-        'celular',
-        'correo',
-        'pagina_web',
+        'numero',
+        'capacidad',
+        'disponible',
         'usuario_modificacion'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'disponible' => 'boolean',
     ];
 }

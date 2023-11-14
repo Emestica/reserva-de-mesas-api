@@ -2,39 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Personas;
+use App\Models\Restaurantes;
 use App\Utilities\Constantes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
-class PersonasController extends Controller
+class RestaurantController extends Controller
 {
-    private string $clazz = PersonasController::class;
+    private string $clazz = RestaurantController::class;
 
-    public function getPersons(Request $request):JsonResponse
+    public function getRestaurants(Request $request):JsonResponse
     {
-        Log::info($this->clazz.'->getPersons() => init');
+        Log::info($this->clazz.'->getRestaurants() => init');
 
         $option = $request->opcion;
         $state = $request->estado;
-        $idPerson = $request->idpersona;
-        $idTypePerson = $request->idtipopersona;
+        $idRestaurant = $request->idrestaurante;
+        $idMunicipio = $request->idMunicipio;
 
-        Log::info($this->clazz.'->getPersons => option:         '.$option);
-        Log::info($this->clazz.'->getPersons => state:          '.$state);
-        Log::info($this->clazz.'->getPersons => idPerson:       '.$idPerson);
-        Log::info($this->clazz.'->getPersons => idTypePerson:   '.$idTypePerson);
+        Log::info($this->clazz.'->getRestaurants => option:       '.$option);
+        Log::info($this->clazz.'->getRestaurants => state:        '.$state);
+        Log::info($this->clazz.'->getRestaurants => idRestaurant: '.$idRestaurant);
+        Log::info($this->clazz.'->getRestaurants => idRestaurant: '.$idMunicipio);
 
         try{
             switch ($option)
             {
                 case 1:
-                    /** TRAE UN LISTADO DE PERSONAS POR ESTADO */
-                    Log::info($this->clazz.'->getPersons() => MSG: TRAE UN LISTADO DE PERSONAS POR ESTADO: '.$state);
+                    /** TRAE UN LISTADO DE RESTAURANTE POR ESTADO */
+                    Log::info($this->clazz.'->getRestaurants() => MSG: TRAE UN LISTADO DE RESTAURANTE POR ESTADO: '.$state);
 
-                    $result = Personas::query(
+                    $result = Restaurantes::query(
                     )->where(
                         'estado',
                         '=',
@@ -54,13 +54,13 @@ class PersonasController extends Controller
                     }
                     break;
                 case 2:
-                    /** TRAE UN OBJETO DE PERSONA POR ID */
-                    Log::info($this->clazz.'->getPersons() => MSG: TRAE UN OBJETO DE PERSONA POR ID: '.$idPerson);
+                    /** TRAE UN OBJETO DE RESTAURANTE POR ID */
+                    Log::info($this->clazz.'->getRestaurants() => MSG: TRAE UN OBJETO DE RESTAURANTE POR ID: '.$idRestaurant);
 
-                    $result = Personas::query()->where(
+                    $result = Restaurantes::query()->where(
                         'id_persona',
                         '=',
-                        $idPerson
+                        $idRestaurant
                     )->first();
 
                     if($result){
@@ -76,23 +76,23 @@ class PersonasController extends Controller
                     }
                     break;
                 case 3:
-                    /** TRAE UN LISTADO DE PERSONAS POR ID TIPO PERSONA Y ESTADO */
+                    /** TRAE UN LISTADO DE RESTAURANTES POR ID MUNICIPIO Y ESTADO */
                     Log::info($this->clazz.'->getRestaurants() => MSG: TRAE UN LISTADO DE RESTAURANTES POR ID MUNICIPIO Y ESTADO');
-                    $result = Personas::query(
+                    $result = Restaurantes::query(
                     )->join(
-                        'tipo_persona',
-                        'personas.id_tipo_persona',
+                        'municipios',
+                        'restaurantes.id_municipio',
                         '=',
-                        'tipo_persona.id_tipo_persona'
+                        'municipios.id_municipio'
                     )->select(
-                        'personas.*',
-                        'tipo_persona.tipo_persona'
+                        'restaurantes.*',
+                        'municipios.municipio'
                     )->where(
-                        'personas.id_municipio',
+                        'restaurantes.id_municipio',
                         '=',
-                        $idTypePerson
+                        $idMunicipio
                     )->where(
-                        'personas.estado',
+                        'restaurantes.estado',
                         '=',
                         $state
                     )->get();
@@ -110,10 +110,10 @@ class PersonasController extends Controller
                     }
                     break;
                 default:
-                    /** TRAE UN LISTADO COMPLETO DE PERSONAS SIN CONDICIONES */
-                    Log::info($this->clazz.'->getPersons() => MSG: TRAE UN LISTADO COMPLETO DE PERSONAS SIN CONDICIONES');
+                    /** TRAE UN LISTADO COMPLETO DE RESTAURANTES SIN CONDICIONES */
+                    Log::info($this->clazz.'->getRestaurants() => MSG: TRAE UN LISTADO COMPLETO DE PERSONAS SIN CONDICIONES');
 
-                    $result = Personas::all();
+                    $result = Restaurantes::all();
 
                     if($result->count() > 0){
                         return response()->json([
@@ -129,7 +129,7 @@ class PersonasController extends Controller
                     break;
             }
         } catch (\Throwable $throwable) {
-            Log::error($this->clazz.'->getPersons() => error: '.$throwable->getMessage());
+            Log::error($this->clazz.'->getRestaurants() => error: '.$throwable->getMessage());
 
             return response()->json([
                 'error' => $throwable->getMessage()
@@ -137,20 +137,20 @@ class PersonasController extends Controller
         }
     }
 
-    public function storePerson(Request $request) : JsonResponse
+    public function storeRestaurant(Request $request) : JsonResponse
     {
-        Log::info($this->clazz.'->storePerson() => init');
+        Log::info($this->clazz.'->storeRestaurant() => init');
         try {
             $validation = Validator::make($request->all(), [
-                'id_tipo_persona' => 'required',
-                'nombres' => 'required',
-                'apellidos' => 'required',
-                'fecha_nacimiento' => 'required',
-                'edad' => 'required',
+                'id_municipio' => 'required',
+                'nombre_legal' => 'required',
+                'restaurante' => 'required',
+                'descripcion' => 'required',
+                'direccion' => 'required',
                 'telefono' => 'required',
                 'celular' => 'required',
-                'correo_electronico' => 'required',
-                'direccion' => 'required',
+                'correo' => 'required',
+                'pagina_web' => 'required',
                 'usuario_creacion' => 'required'
             ]);
 
@@ -160,7 +160,7 @@ class PersonasController extends Controller
                     'data' => $validation->messages()
                 ]);
             }else{
-                $result = Personas::create($request->all());
+                $result = Restaurantes::create($request->all());
 
                 return response()->json([
                     'success' => true,
@@ -169,7 +169,7 @@ class PersonasController extends Controller
                 ]);
             }
         } catch (\Throwable $throwable) {
-            Log::error($this->clazz.'->storePerson() => error: '.$throwable->getMessage());
+            Log::error($this->clazz.'->storeRestaurant() => error: '.$throwable->getMessage());
 
             return response()->json([
                 'error' => $throwable->getMessage()
@@ -177,22 +177,22 @@ class PersonasController extends Controller
         }
     }
 
-    public function updatePerson(Request $request, $id) : JsonResponse
+    public function updateRestaurant(Request $request, $id) : JsonResponse
     {
-        Log::info($this->clazz.'->updatePerson() => init');
+        Log::info($this->clazz.'->updateRestaurant() => init');
         try {
             $validation = Validator::make($request->all(), [
-                'id_tipo_persona' => 'required',
-                'nombres' => 'required',
-                'apellidos' => 'required',
-                'fecha_nacimiento' => 'required',
-                'edad' => 'required',
+                'id_municipio' => 'required',
+                'nombre_legal' => 'required',
+                'restaurante' => 'required',
+                'descripcion' => 'required',
+                'direccion' => 'required',
                 'telefono' => 'required',
                 'celular' => 'required',
-                'correo_electronico' => 'required',
-                'direccion' => 'required',
+                'correo' => 'required',
+                'pagina_web' => 'required',
                 'estado' => 'required',
-                'usuario_modificacion' => 'required'
+                'usuario_creacion' => 'required'
             ]);
 
             if($validation->fails()){
@@ -201,24 +201,24 @@ class PersonasController extends Controller
                     'data' => $validation->messages()
                 ]);
             }else{
-                $person = Personas::find($id);
+                $restaurant = Restaurantes::find($id);
 
-                if($person){
+                if($restaurant){
 
-                    $person->id_tipo_persona = $request->id_tipo_persona;
-                    $person->nombres = $request->nombres;
-                    $person->apellidos = $request->apellidos;
-                    $person->fecha_nacimiento = $request->fecha_nacimiento;
-                    $person->edad = $request->edad;
-                    $person->telefono = $request->telefono;
-                    $person->celular = $request->celular;
-                    $person->correo_electronico = $request->correo_electronico;
-                    $person->direccion = $request->direccion;
+                    $restaurant->id_municipio = $request->id_municipio;
+                    $restaurant->nombre_legal = $request->nombre_legal;
+                    $restaurant->restaurante = $request->restaurante;
+                    $restaurant->descripcion = $request->descripcion;
+                    $restaurant->direccion = $request->direccion;
+                    $restaurant->telefono = $request->telefono;
+                    $restaurant->celular = $request->celular;
+                    $restaurant->correo = $request->correo;
+                    $restaurant->pagina_web = $request->pagina_web;
 
-                    $person->estado = $request->estado;
-                    $person->usuario_modificacion = $request->usuario_modificacion;
+                    $restaurant->estado = $request->estado;
+                    $restaurant->usuario_modificacion = $request->usuario_modificacion;
 
-                    $result = $person->save();
+                    $result = $restaurant->save();
 
                     return response()->json([
                         'success' => true,
@@ -233,7 +233,7 @@ class PersonasController extends Controller
                 }
             }
         } catch (\Throwable $throwable) {
-            Log::error($this->clazz.'->updatePerson() => error: '.$throwable->getMessage());
+            Log::error($this->clazz.'->updateRestaurant() => error: '.$throwable->getMessage());
 
             return response()->json([
                 'error' => $throwable->getMessage()
@@ -241,15 +241,15 @@ class PersonasController extends Controller
         }
     }
 
-    public function deletePerson($id) : JsonResponse
+    public function deleteRestaurant($id) : JsonResponse
     {
-        Log::info($this->clazz.'->deletePerson() => init');
+        Log::info($this->clazz.'->deleteRestaurant() => init');
         try {
-            $person = Personas::find($id);
+            $restaurant = Restaurantes::find($id);
 
-            if($person){
-                $person->estado = Constantes::ESTADO_ELIMINADO;
-                $result = $person->save();
+            if($restaurant){
+                $restaurant->estado = Constantes::ESTADO_ELIMINADO;
+                $result = $restaurant->save();
 
                 return response()->json([
                     'success' => true,
@@ -263,7 +263,7 @@ class PersonasController extends Controller
                 ]);
             }
         } catch (\Throwable $throwable) {
-            Log::error($this->clazz.'->deletePerson() => error: '.$throwable->getMessage());
+            Log::error($this->clazz.'->deleteRestaurant() => error: '.$throwable->getMessage());
 
             return response()->json([
                 'error' => $throwable->getMessage()

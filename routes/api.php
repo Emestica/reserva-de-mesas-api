@@ -88,6 +88,46 @@ Route::put('/update-rol/{id}',
 Route::put('/delete-rol/{id}',
     [\App\Http\Controllers\ProfileController::class, 'deleteRol']);
 
+/** TABLA TIPO PERSONAS */
+Route::get('/get-tipo-personas',
+    [\App\Http\Controllers\TipoPersonasController::class, 'getTipoPersonas']);
+Route::post('/save-tipo-persona',
+    [\App\Http\Controllers\TipoPersonasController::class, 'storeTipoPersona']);
+Route::put('/update-tipo-persona/{id}',
+    [\App\Http\Controllers\TipoPersonasController::class, 'updateTipoPersona']);
+Route::put('/delete-tipo-persona/{id}',
+    [\App\Http\Controllers\TipoPersonasController::class, 'deleteTipoPersona']);
+
+/** TABLA PERSONAS */
+Route::get('/get-personas',
+    [\App\Http\Controllers\PersonasController::class, 'getPersons']);
+Route::post('/save-persona',
+    [\App\Http\Controllers\PersonasController::class, 'storePerson']);
+Route::put('/update-persona/{id}',
+    [\App\Http\Controllers\PersonasController::class, 'updatePerson']);
+Route::put('/delete-persona/{id}',
+    [\App\Http\Controllers\PersonasController::class, 'deletePerson']);
+
+/** TABLA RESTAURANTES */
+Route::get('/get-restaurantes',
+    [\App\Http\Controllers\RestaurantController::class, 'getRestaurants']);
+Route::post('/save-restaurante',
+    [\App\Http\Controllers\RestaurantController::class, 'storeRestaurant']);
+Route::put('/update-restaurante/{id}',
+    [\App\Http\Controllers\RestaurantController::class, 'updateRestaurant']);
+Route::put('/delete-restaurante/{id}',
+    [\App\Http\Controllers\RestaurantController::class, 'deleteRestaurant']);
+
+/** TABLA MESAS */
+Route::get('/get-mesas',
+    [\App\Http\Controllers\TableController::class, 'getTables']);
+Route::post('/save-mesa',
+    [\App\Http\Controllers\TableController::class, 'storeTable']);
+Route::put('/update-mesa/{id}',
+    [\App\Http\Controllers\TableController::class, 'updateTable']);
+Route::put('/delete-mesa/{id}',
+    [\App\Http\Controllers\TableController::class, 'deleteTable']);
+
 /** TEST */
 Route::post('/client/register-user',
     [\App\Http\Controllers\SecurityClientController::class, 'registerUserClient']);
