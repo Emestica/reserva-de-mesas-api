@@ -76,7 +76,7 @@ class SecurityClientController extends Controller
             'person.apellidos' => 'required',
             'person.fecha_nacimiento' => 'required',
             'person.edad' => 'required',
-            'person.telefono' => 'required',
+            //'person.telefono' => 'required',
             'person.celular' => 'required',
             'person.correo_electronico' => 'required',
             'person.direccion' => 'required',

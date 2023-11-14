@@ -55,12 +55,12 @@ class DepartamentosController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -69,20 +69,21 @@ class DepartamentosController extends Controller
                     /** TRAE UN OBJETO DE DEPARTAMENTO POR ID */
                     Log::info($this->clazz.'->getDepartamentos() => MSG: TRAE UN OBJETO DE DEPARTAMENTO POR ID: '.$iddepartamento);
 
-                    $result = Departamentos::query()->where(
+                    $result = Departamentos::query(
+                    )->where(
                         'id_departamento',
                         '=',
-                        $idpais
+                        $iddepartamento
                     )->first();
 
                     if($result){
                         return response()->json([
-                            'code' => 200,
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -95,12 +96,12 @@ class DepartamentosController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
