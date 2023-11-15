@@ -128,7 +128,7 @@ class RestaurantController extends Controller
                         'restaurantes.*',
                         'municipios.municipio'
                     )->whereIn(
-                        'mesas.estado',
+                        'restaurantes.estado',
                         array(
                             Constantes::ESTADO_ACTIVO,
                             Constantes::ESTADO_INACTIVO
