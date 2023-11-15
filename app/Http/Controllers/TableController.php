@@ -56,12 +56,12 @@ class TableController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -88,12 +88,12 @@ class TableController extends Controller
 
                     if($result){
                         return response()->json([
-                            'code' => 200,
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -125,12 +125,12 @@ class TableController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }

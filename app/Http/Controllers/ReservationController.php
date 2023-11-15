@@ -328,12 +328,12 @@ class ReservationController extends Controller
             $validation = Validator::make($request->all(), [
                 'id_mesa' => 'required',
                 'id_usuario_persona' => 'required',
-                'codigo_reservacion' => 'required',
+                //'codigo_reservacion' => 'required',
                 'fecha_reservacion' => 'required',
                 'hora_inicio' => 'required',
                 'hora_fin' => 'required',
                 'notas' => 'required',
-                'estatus_reservacion' => 'required',
+                //'estatus_reservacion' => 'required',
                 'usuario_creacion' => 'required'
             ]);
 
