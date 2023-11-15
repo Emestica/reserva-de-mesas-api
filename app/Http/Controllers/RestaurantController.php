@@ -43,12 +43,14 @@ class RestaurantController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO DE RESTAURANTE POR ESTADO',
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO DE RESTAURANTE POR ESTADO',
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -58,19 +60,21 @@ class RestaurantController extends Controller
                     Log::info($this->clazz.'->getRestaurants() => MSG: TRAE UN OBJETO DE RESTAURANTE POR ID: '.$idRestaurant);
 
                     $result = Restaurantes::query()->where(
-                        'id_persona',
+                        'id_restaurante',
                         '=',
                         $idRestaurant
                     )->first();
 
                     if($result){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN OBJETO DE RESTAURANTE POR ID',
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN OBJETO DE RESTAURANTE POR ID',
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -99,12 +103,48 @@ class RestaurantController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO DE RESTAURANTES POR ID MUNICIPIO Y ESTADO',
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO DE RESTAURANTES POR ID MUNICIPIO Y ESTADO',
+                            'success' => false,
+                            'data' => 'No Se Encontraron Registros!!!'
+                        ]);
+                    }
+                    break;
+                case 4:
+                    /** TRAE UN LISTADO RESTAURANTES RELACION CON EL MUNICIPIO DONDE EL ESTADO ES ACTIVO E INACTIVO */
+                    Log::info($this->clazz.'->getRestaurants() => MSG: TRAE UN LISTADO RESTAURANTES RELACION CON EL MUNICIPIO DONDE EL ESTADO ES ACTIVO E INACTIVO');
+                    $result = Restaurantes::query(
+                    )->join(
+                        'municipios',
+                        'restaurantes.id_municipio',
+                        '=',
+                        'municipios.id_municipio'
+                    )->select(
+                        'restaurantes.*',
+                        'municipios.municipio'
+                    )->whereIn(
+                        'mesas.estado',
+                        array(
+                            Constantes::ESTADO_ACTIVO,
+                            Constantes::ESTADO_INACTIVO
+                        )
+                    )->get();
+
+                    if($result->count() > 0){
+                        return response()->json([
+                            'title' => 'TRAE UN LISTADO RESTAURANTES RELACION CON EL MUNICIPIO DONDE EL ESTADO ES ACTIVO E INACTIVO',
+                            'success' => true,
+                            'data' => $result
+                        ]);
+                    }else{
+                        return response()->json([
+                            'title' => 'TRAE UN LISTADO RESTAURANTES RELACION CON EL MUNICIPIO DONDE EL ESTADO ES ACTIVO E INACTIVO',
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -117,12 +157,14 @@ class RestaurantController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO COMPLETO DE RESTAURANTES SIN CONDICIONES',
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO COMPLETO DE RESTAURANTES SIN CONDICIONES',
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
