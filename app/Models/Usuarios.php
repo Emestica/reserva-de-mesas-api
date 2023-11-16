@@ -39,6 +39,7 @@ class Usuarios extends Model
         'usuario',
         'contrasenia',
         'correo_electronico',
-        'ultima_actividad'
+        'ultima_actividad',
+        'channel'
     ];
 }

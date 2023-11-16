@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /** ESTAS RUTAS SON SOLO PARA PRUEBAS CON PATRON REPOSITORIO */
+Route::post('/test-guardar-xxx', [RolesController::class, 'guardarTest']);
 Route::get('/test-obtener-roles', [RolesController::class, 'show']);
 Route::post('/test-guardar-rol', [RolesController::class, 'store']);
 Route::put('/test-actualizar-rol', [RolesController::class, 'update']);
@@ -144,9 +145,16 @@ Route::put('/update-reservacion/{id}',
 Route::put('/delete-reservacion/{id}',
     [\App\Http\Controllers\ReservationController::class, 'deleteReservation']);
 
-/** TEST */
+/** SECURITY WEB */
+Route::get('/client/login-user',
+    [\App\Http\Controllers\SecurityClientController::class, 'loginUserWeb']);
+
 Route::post('/client/register-user',
     [\App\Http\Controllers\SecurityClientController::class, 'registerUserClient']);
 
+/** SECURITY MOBILE */
 Route::post('/mobile/register-user',
     [\App\Http\Controllers\SecurityMobileController::class, 'registerUserMobile']);
+
+Route::get('/mobile/login-user',
+    [\App\Http\Controllers\SecurityMobileController::class, 'loginUserMobile']);

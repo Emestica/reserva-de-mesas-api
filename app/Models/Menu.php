@@ -40,7 +40,7 @@ class Menu extends Model
         'id_clasificacion',
         'id_tipo_menu',
         'nombre',
-        'descripcion',
+        'informacion',
         'precio',
         'descuento',
         'disponible',

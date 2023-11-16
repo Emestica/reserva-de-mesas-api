@@ -38,8 +38,6 @@ class UsuarioRol extends Model
     protected $fillable = [
         'id_usuario',
         'id_rol',
-        'estado',
         'usuario_creacion',
-        'usuario_modificacion'
     ];
 }
