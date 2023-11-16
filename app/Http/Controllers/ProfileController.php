@@ -41,14 +41,16 @@ class ProfileController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO DE ROLES POR ESTADO: '.$estado,
+                            'success' => true,
                             'data' => $result
-                        ]);
+                        ], 200);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO DE ROLES POR ESTADO: '.$estado,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
-                        ]);
+                        ], 200);
                     }
                     break;
                 case 2:
@@ -63,14 +65,16 @@ class ProfileController extends Controller
 
                     if($result){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN OBJETO DE ROL POR ID: '.$idrol,
+                            'success' => true,
                             'data' => $result
-                        ]);
+                        ], 200);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN OBJETO DE ROL POR ID: '.$idrol,
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
-                        ]);
+                        ], 200);
                     }
                     break;
                 default:
@@ -81,14 +85,16 @@ class ProfileController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO COMPLETO DE ROLES SIN CONDICIONES',
+                            'success' => true,
                             'data' => $result
-                        ]);
+                        ], 200);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO COMPLETO DE ROLES SIN CONDICIONES',
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
-                        ]);
+                        ], 200);
                     }
                     break;
             }
