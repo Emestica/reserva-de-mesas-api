@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UsuarioPersona extends Model
+class UsuarioRestaurante extends Model
 {
     use HasFactory;
 
@@ -14,14 +14,14 @@ class UsuarioPersona extends Model
      *
      * @var string
      */
-    protected $table = 'usuario_persona';
+    protected $table = 'usuario_restaurante';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_usuario_persona';
+    protected $primaryKey = 'id_usuario_restaurante';
 
     /**
      * Indicates if the model should be timestamped.
@@ -37,7 +37,7 @@ class UsuarioPersona extends Model
      */
     protected $fillable = [
         'id_usuario',
-        'id_persona',
+        'id_restaurante',
         'usuario_creacion',
     ];
 }

@@ -202,7 +202,7 @@ class MenuController extends Controller
                 'id_clasificacion' => 'required',
                 'id_tipo_menu' => 'required',
                 'nombre' => 'required',
-                'descripcion' => 'required',
+                'informacion' => 'required',
                 'precio' => 'required',
                 'descuento' => 'required',
                 'disponible' => 'required',
@@ -241,7 +241,7 @@ class MenuController extends Controller
                 'id_clasificacion' => 'required',
                 'id_tipo_menu' => 'required',
                 'nombre' => 'required',
-                'descripcion' => 'required',
+                'informacion' => 'required',
                 'precio' => 'required',
                 'descuento' => 'required',
                 'disponible' => 'required',
@@ -263,7 +263,7 @@ class MenuController extends Controller
                     $menu->id_clasificacion = $request->id_clasificacion;
                     $menu->id_tipo_menu = $request->id_tipo_menu;
                     $menu->nombre = $request->nombre;
-                    $menu->descripcion = $request->descripcion;
+                    $menu->informacion = $request->informacion;
                     $menu->precio = $request->precio;
                     $menu->descuento = $request->descuento;
                     $menu->disponible = $request->disponible;

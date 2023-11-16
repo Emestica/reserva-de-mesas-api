@@ -20,9 +20,9 @@ class ReservationController extends Controller
 
         $option = $request->opcion;
         $state = $request->estado;
-        $idReservation = $request->idreservacion;
-        $idUserPerson = $request->idmenu;
-        $idRestaurant = $request->idrestaurante;
+        $idReservation = $request->id_reservacion;
+        $idUserPerson = $request->id_usuario_persona;
+        $idRestaurant = $request->id_restaurante;
 
         Log::info($this->clazz.'->getReservations => option:       '.$option);
         Log::info($this->clazz.'->getReservations => state:        '.$state);

@@ -20,7 +20,6 @@ class Roles extends Model
     protected $fillable = [
         'rol',
         'descripcion',
-        'estado',
         'usuario_creacion'
     ];
 }
