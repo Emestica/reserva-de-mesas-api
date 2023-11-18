@@ -11,7 +11,6 @@ use App\Models\Usuarios;
 use App\Utilities\Constantes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -75,7 +74,7 @@ class SecurityMobileController extends Controller
                         return response()->json([
                             'success' => true,
                             'data_user_object' => $user,
-                            'data_user_person-object' => $userPerson
+                            'data_user_person_object' => $userPerson
                         ]);
                     }else{
                         return response()->json([
@@ -107,7 +106,7 @@ class SecurityMobileController extends Controller
 
         if($resUser['result'] === true && $resPerson['result'] === true)
         {
-            if($this->validateUniqueEmail($request->input('user.correo_electronico'))){
+            if($this->validateUniqueEmail($request->input('user.email'))){
 
                 Log::info($this->clazz.'->registerUserMobile() => CREATE OBJECT USER <=');
                 $user = $this->createObjectUser($request);
@@ -187,8 +186,9 @@ class SecurityMobileController extends Controller
     public function validateRequiredUser(Request $request): array
     {
         $validationUser = Validator::make($request->all(),[
-            'user.correo_electronico' => 'required',
+            'user.email' => 'required',
             'user.password' => 'required',
+            'user.usuario_creacion' => 'required'
         ]);
 
         if(!$validationUser->fails()){
@@ -208,13 +208,13 @@ class SecurityMobileController extends Controller
         $validationPerson = Validator::make($request->all(),[
             'person.nombres' => 'required',
             'person.apellidos' => 'required',
-            'person.fecha_nacimiento' => 'required',
-            'person.edad' => 'required',
+            //'person.fecha_nacimiento' => 'required',
+            //'person.edad' => 'required',
             //'person.telefono' => 'required',
             'person.celular' => 'required',
             //'person.correo_electronico' => 'required',
             //'person.direccion' => 'required',
-            'person.usuario_creacion' => 'required',
+            //'person.usuario_creacion' => 'required',
             //'person.id_tipo_persona' => 'required'
         ]);
 
@@ -253,8 +253,8 @@ class SecurityMobileController extends Controller
     public function createObjectUser(Request $request): Usuarios
     {
         $user = new Usuarios();
-        $user->correo_electronico = $request->input('user.correo_electronico');
-        $user->contrasenia = md5($request->input('user.contrasenia'));
+        $user->correo_electronico = $request->input('user.email');
+        $user->contrasenia = md5($request->input('user.password'));
         $user->channel = Constantes::CHANNEL_MOBILE;
         //$userGenerate = $this->generateNameUser($request->input('person.nombres'), $request->input('person.apellidos'));
         //Log::info($this->clazz.'->createObjectUser() => name user generate: '.$userGenerate);
@@ -271,10 +271,142 @@ class SecurityMobileController extends Controller
         $person->fecha_nacimiento = $request->input('person.fecha_nacimiento');
         //$person->telefono = $request->input('person.telefono');
         $person->celular = $request->input('person.celular');
-        $person->correo_electronico = $request->input('user.correo_electronico');
+        $person->correo_electronico = $request->input('user.email');
         //$person->direccion = $request->input('person.direccion');
-        $person->usuario_creacion = $request->input('usuario_creacion.nombres');
+        $person->usuario_creacion = $request->input('user.usuario_creacion');
         $person->id_tipo_persona = $typePerson->id_tipo_persona;
         return $person;
+    }
+
+    public function getPersonalInformation($id):JsonResponse
+    {
+        Log::info($this->clazz."->getPersonalInformation() => INIT");
+        Log::info($this->clazz."->getPersonalInformation() => ID USER PERSON: ".$id);
+        try {
+            $personalInformation = UsuarioPersona::query(
+            )->join(
+                'personas',
+                'usuario_persona.id_persona',
+                '=',
+                'personas.id_persona'
+            )->join(
+                'usuarios',
+                'usuario_persona.id_usuario',
+                '=',
+                'usuarios.id_usuario'
+            )->select(
+                'usuario_persona.*',
+                'personas.nombres',
+                'personas.apellidos',
+                'personas.celular',
+                'personas.telefono',
+                'personas.edad',
+                'personas.fecha_nacimiento',
+                'personas.direccion',
+                'personas.estado as persona_estado',
+                'usuarios.usuario',
+                'usuarios.correo_electronico',
+                'usuarios.estado as usuario_estado',
+            )->where(
+                'usuario_persona.id_usuario_persona',
+                '=',
+                $id
+            )->where(
+                'usuarios.channel',
+                '=',
+                Constantes::CHANNEL_MOBILE
+            )->where(
+                'usuario_persona.estado',
+                '=',
+                Constantes::ESTADO_ACTIVO
+            )->first();
+
+            if($personalInformation){
+                return response()->json([
+                    'success' => true,
+                    'data' => $personalInformation
+                ]);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'data' => 'Datos Personales No Encontrados!!!'
+                ]);
+            }
+        } catch (\Throwable $throwable){
+            Log::error('->getPersonalInformation() => error: '.$throwable->getMessage());
+            return response()->json([
+                'error' => $throwable->getMessage()
+            ], 500);
+        }
+    }
+
+    public function updatePersonalInformation(Request $request):JsonResponse
+    {
+        Log::info($this->clazz.'->updatePersonalInformation() => init');
+        try {
+            $validation = Validator::make($request->all(), [
+                'email' => 'required',
+                'password' => 'required',
+                'nombres' => 'required',
+                'apellidos' => 'required',
+                'edad' => 'required',
+                'fecha_nacimiento' => 'required',
+                'telefono' => 'required',
+                'celular' => 'required',
+                'direccion' => 'required',
+                'usuario_modificacion' => 'required',
+                'id_persona' => 'required',
+                'id_usuario' => 'required'
+            ]);
+
+            if($validation->fails()){
+                return response()->json([
+                    'success' => false,
+                    'data' => 'Faltan Datos Requeridos!!!',
+                    'result' => $validation->messages()
+                ]);
+            }else{
+                $person = Personas::find($request->id_persona);
+                $user = Usuarios::find($request->id_usuario);
+
+                if($person){
+
+                    $person->nombres             = $request->nombres;
+                    $person->apellidos           = $request->apellidos;
+                    $person->edad                = $request->edad;
+                    $person->fecha_nacimiento    = $request->fecha_nacimiento;
+                    $person->telefono            = $request->telefono;
+                    $person->celular             = $request->celular;
+                    $person->correo_electronico  = $request->email;
+                    $person->direccion           = $request->direccion;
+                    $person->usuario_modificacion = $request->usuario_modificacion;
+
+                    $resultPerson = $person->save();
+
+                    $user->correo_electronico = $request->email;
+                    $user->contrasenia = md5($request->password);
+
+                    $resultUser = $user->save();
+
+                    return response()->json([
+                        'success' => true,
+                        'data' => 'Registro Actualizado Correctamente!!!',
+                        'result-person' => $resultPerson,
+                        'result-user' => $resultUser
+                    ]);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'data' => 'Registro No Encontrado!!!'
+                    ]);
+                }
+            }
+        } catch (\Throwable $throwable) {
+            Log::error($this->clazz.'->updatePersonalInformation() => error: '.$throwable->getMessage());
+
+            return response()->json([
+                'error' => $throwable->getMessage()
+            ], 500);
+        }
     }
 }
