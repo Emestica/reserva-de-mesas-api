@@ -234,7 +234,7 @@ class RestaurantController extends Controller
                 'correo' => 'required',
                 'pagina_web' => 'required',
                 'estado' => 'required',
-                'usuario_creacion' => 'required'
+                'usuario_modificacion' => 'required'
             ]);
 
             if($validation->fails()){

@@ -156,5 +156,11 @@ Route::post('/client/register-user',
 Route::post('/mobile/register-user',
     [\App\Http\Controllers\SecurityMobileController::class, 'registerUserMobile']);
 
-Route::get('/mobile/login-user',
+Route::post('/mobile/login-user',
     [\App\Http\Controllers\SecurityMobileController::class, 'loginUserMobile']);
+
+Route::get('/mobile/get-personal-information/{id}',
+    [\App\Http\Controllers\SecurityMobileController::class, 'getPersonalInformation']);
+
+Route::put('/mobile/update-personal-information',
+    [\App\Http\Controllers\SecurityMobileController::class, 'updatePersonalInformation']);
