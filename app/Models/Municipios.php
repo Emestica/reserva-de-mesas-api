@@ -14,14 +14,14 @@ class Municipios extends Model
      *
      * @var string
      */
-    protected $table = 'departamentos';
+    protected $table = 'municipios';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_departamento';
+    protected $primaryKey = 'id_municipio';
 
     /**
      * Indicates if the model should be timestamped.
