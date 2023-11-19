@@ -108,7 +108,7 @@ class ClasificacionController extends Controller
             $validation = Validator::make($request->all(), [
                 'clasificacion' => 'required',
                 'descripcion' => 'required',
-                'icon' => 'required',
+                //'icon' => 'required',
                 'usuario_creacion' => 'required'
             ]);
 
@@ -142,7 +142,7 @@ class ClasificacionController extends Controller
             $validation = Validator::make($request->all(), [
                 'clasificacion' => 'required',
                 'descripcion' => 'required',
-                'icon' => 'required',
+                //'icon' => 'required',
                 'estado' => 'required',
                 'usuario_modificacion' => 'required'
             ]);
@@ -159,7 +159,7 @@ class ClasificacionController extends Controller
 
                     $clasificacion->clasificacion = $request->clasificacion;
                     $clasificacion->descripcion = $request->descripcion;
-                    $clasificacion->icon = $request->icon;
+                    //$clasificacion->icon = $request->icon;
                     $clasificacion->estado = $request->estado;
                     $clasificacion->usuario_modificacion = $request->usuario_modificacion;
 
