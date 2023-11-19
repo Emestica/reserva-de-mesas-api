@@ -72,6 +72,31 @@ class ClasificacionController extends Controller
                         ]);
                     }
                     break;
+                case 3:
+                    /** TRAE UN OBJETO DE CLASIFICACION POR ID */
+                    Log::info($this->clazz.'->getClasificaciones() => msg: TRAE UN OBJETO DE CLASIFICACION POR ID');
+
+                    $result = Clasificacion::query(
+                    )->whereIn(
+                        'clasificacion.estado',
+                        array(
+                            Constantes::ESTADO_ACTIVO,
+                            Constantes::ESTADO_INACTIVO
+                        )
+                    )->get();
+
+                    if($result){
+                        return response()->json([
+                            'code' => 200,
+                            'data' => $result
+                        ]);
+                    }else{
+                        return response()->json([
+                            'code' => 200,
+                            'data' => 'No Se Encontraron Registros!!!'
+                        ]);
+                    }
+                    break;
                 default:
                     /** TRAE UN LISTADO COMPLETO DE CLASIFICACIONES SIN CONDICIONES */
                     Log::info($this->clazz.'->getClasificaciones() => msg: TRAE UN LISTADO COMPLETO DE CLASIFICACIONES SIN CONDICIONES');
