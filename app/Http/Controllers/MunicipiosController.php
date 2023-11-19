@@ -219,7 +219,7 @@ class MunicipiosController extends Controller
 
                 if($municipio){
 
-                    $municipio->id_departamento = $request->departamento;
+                    $municipio->id_departamento = $request->id_departamento;
                     $municipio->municipio = $request->municipio;
                     $municipio->estado = $request->estado;
                     $municipio->usuario_modificacion = $request->usuario_modificacion;
@@ -239,6 +239,7 @@ class MunicipiosController extends Controller
                 }
             }
         } catch (\Throwable $throwable) {
+
             Log::error($this->clazz.'->updateMunicipios() => error: '.$throwable->getMessage());
 
             return response()->json([
