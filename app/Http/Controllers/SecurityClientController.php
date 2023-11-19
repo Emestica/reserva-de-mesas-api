@@ -99,8 +99,8 @@ class SecurityClientController extends Controller
                         return response()->json([
                             'success' => true,
                             'data_user_object' => $user,
-                            'data_user_person-object' => $userPerson,
-                            'data_user_restaurant-object' => $userRestaurant
+                            'data_user_person_object' => $userPerson,
+                            'data_user_restaurant_object' => $userRestaurant
                         ]);
                     }else{
                         return response()->json([

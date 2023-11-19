@@ -71,7 +71,16 @@ class MunicipiosController extends Controller
                     /** TRAE UN OBJETO DE MUNICIPIOS POR ID */
                     Log::info($this->clazz.'->getMunicipios() => msg: TRAE UN OBJETO DE MUNICIPIOS POR ID: '.$idmunicipio);
 
-                    $result = Municipios::query()->where(
+                    $result = Municipios::query(
+                    )->join(
+                        'departamentos',
+                        'municipios.id_departamento',
+                        '=',
+                        'departamentos.id_departamento'
+                    )->select(
+                        'municipios.*',
+                        'departamentos.departamento'
+                    )->where(
                         'id_municipio',
                         '=',
                         $idmunicipio
