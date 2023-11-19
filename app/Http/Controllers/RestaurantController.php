@@ -250,12 +250,12 @@ class RestaurantController extends Controller
                     $restaurant->id_municipio = $request->id_municipio;
                     $restaurant->nombre_legal = $request->nombre_legal;
                     $restaurant->restaurante = $request->restaurante;
-                    $restaurant->descripcion = $request->descripcion;
-                    $restaurant->direccion = $request->direccion;
-                    $restaurant->telefono = $request->telefono;
-                    $restaurant->celular = $request->celular;
-                    $restaurant->correo = $request->correo;
-                    $restaurant->pagina_web = $request->pagina_web;
+                    //$restaurant->descripcion = $request->descripcion;
+                    //$restaurant->direccion = $request->direccion;
+                    //$restaurant->telefono = $request->telefono;
+                    //$restaurant->celular = $request->celular;
+                    //$restaurant->correo = $request->correo;
+                    //$restaurant->pagina_web = $request->pagina_web;
 
                     $restaurant->estado = $request->estado;
                     $restaurant->usuario_modificacion = $request->usuario_modificacion;
