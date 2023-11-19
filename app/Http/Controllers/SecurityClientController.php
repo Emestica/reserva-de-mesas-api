@@ -233,7 +233,7 @@ class SecurityClientController extends Controller
     public function validateRequiredUser(Request $request): array
     {
         $validationUser = Validator::make($request->all(),[
-            'user.correo_electronico' => 'required',
+            'user.email' => 'required',
             'user.password' => 'required',
         ]);
 
@@ -254,7 +254,7 @@ class SecurityClientController extends Controller
         $validationPerson = Validator::make($request->all(),[
             'person.nombres' => 'required',
             'person.apellidos' => 'required',
-            'person.fecha_nacimiento' => 'required',
+            //'person.fecha_nacimiento' => 'required',
             'person.edad' => 'required',
             //'person.telefono' => 'required',
             'person.celular' => 'required',
@@ -281,7 +281,7 @@ class SecurityClientController extends Controller
         $validationRestaurant = Validator::make($request->all(),[
             'restaurant.nombre_legal' => 'required',
             'restaurant.restaurante' => 'required',
-            'restaurant.descripcion' => 'required',
+            //'restaurant.descripcion' => 'required',
             //'restaurant.direccion' => 'required',
             'restaurant.telefono' => 'required',
             //'restaurant.celular' => 'required',
@@ -325,8 +325,8 @@ class SecurityClientController extends Controller
     public function createObjectUser(Request $request): Usuarios
     {
         $user = new Usuarios();
-        $user->correo_electronico = $request->input('user.correo_electronico');
-        $user->contrasenia = md5($request->input('user.contrasenia'));
+        $user->correo_electronico = $request->input('user.email');
+        $user->contrasenia = md5($request->input('user.password'));
         $user->channel = Constantes::CHANNEL_WEB;
         //$userGenerate = $this->generateNameUser($request->input('person.nombres'), $request->input('person.apellidos'));
         //Log::info($this->clazz.'->createObjectUser() => name user generate: '.$userGenerate);
@@ -364,13 +364,15 @@ class SecurityClientController extends Controller
         $person = new Personas();
         $person->nombres = $request->input('person.nombres');
         $person->apellidos = $request->input('person.apellidos');
-        $person->fecha_nacimiento = $request->input('person.fecha_nacimiento');
-        //$person->telefono = $request->input('person.telefono');
-        $person->celular = $request->input('person.celular');
-        $person->correo_electronico = $request->input('user.correo_electronico');
-        //$person->direccion = $request->input('person.direccion');
-        $person->usuario_creacion = $request->input('usuario_creacion.nombres');
+        $person->edad = $request->input('person.edad');
+        $person->telefono = $request->input('person.telefono');
+        $person->correo_electronico = $request->input('user.email');
+        $person->usuario_creacion = $request->input('person.usuario_creacion');
         $person->id_tipo_persona = $typePerson->id_tipo_persona;
+
+        //$person->fecha_nacimiento = $request->input('person.fecha_nacimiento');
+        //$person->celular = $request->input('person.celular');
+        //$person->direccion = $request->input('person.direccion');
         return $person;
     }
 
@@ -379,14 +381,15 @@ class SecurityClientController extends Controller
         $restaurant = new Restaurantes();
         $restaurant->nombre_legal = $request->input('restaurant.nombre_legal');
         $restaurant->restaurante = $request->input('restaurant.restaurante');
-        $restaurant->descripcion = $request->input('restaurant.descripcion');
-        $restaurant->direccion = $request->input('restaurant.direccion');
         $restaurant->telefono = $request->input('restaurant.telefono');
-        //$restaurant->celular = $request->input('restaurant.celular');
         $restaurant->correo = $request->input('restaurant.correo');
-        $restaurant->pagina_web = $request->input('restaurant.pagina_web');
         $restaurant->usuario_creacion = $request->input('restaurant.usuario_creacion');
         $restaurant->id_municipio = $request->input('restaurant.id_municipio');
+
+        //$restaurant->descripcion = $request->input('restaurant.descripcion');
+        //$restaurant->direccion = $request->input('restaurant.direccion');
+        //$restaurant->celular = $request->input('restaurant.celular');
+        //$restaurant->pagina_web = $request->input('restaurant.pagina_web');
         return $restaurant;
     }
 }
