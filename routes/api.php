@@ -146,7 +146,7 @@ Route::put('/delete-reservacion/{id}',
     [\App\Http\Controllers\ReservationController::class, 'deleteReservation']);
 
 /** SECURITY WEB */
-Route::get('/client/login-user',
+Route::post('/client/login-user',
     [\App\Http\Controllers\SecurityClientController::class, 'loginUserWeb']);
 
 Route::post('/client/register-user',
