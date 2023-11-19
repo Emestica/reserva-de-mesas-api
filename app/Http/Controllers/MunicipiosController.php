@@ -55,12 +55,14 @@ class MunicipiosController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO DE MUNICIPIOS POR ID DEPARTAMENTO Y ESTADO',
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO DE MUNICIPIOS POR ID DEPARTAMENTO Y ESTADO',
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -77,12 +79,49 @@ class MunicipiosController extends Controller
 
                     if($result){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN OBJETO DE MUNICIPIOS POR ID',
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN OBJETO DE MUNICIPIOS POR ID',
+                            'success' => false,
+                            'data' => 'No Se Encontraron Registros!!!'
+                        ]);
+                    }
+                    break;
+                case 3:
+                    /** TRAE UN LISTADO DE MUNICIPIOS CON ESTADO ACTIVO E INACTIVO */
+                    Log::info($this->clazz.'->getMunicipios() => MSG: TRAE UN LISTADO DE MUNICIPIOS CON ESTADO ACTIVO E INACTIVO');
+
+                    $result = Municipios::query(
+                    )->join(
+                        'departamentos',
+                        'municipios.id_departamento',
+                        '=',
+                        'departamentos.id_departamento'
+                    )->select(
+                        'municipios.*',
+                        'departamentos.departamento'
+                    )->whereIn(
+                        'municipios.estado',
+                        array(
+                            Constantes::ESTADO_ACTIVO,
+                            Constantes::ESTADO_INACTIVO
+                        )
+                    )->get();
+
+                    if($result->count() > 0){
+                        return response()->json([
+                            'title' => 'TRAE UN LISTADO DE MUNICIPIOS CON ESTADO ACTIVO E INACTIVO',
+                            'success' => true,
+                            'data' => $result
+                        ]);
+                    }else{
+                        return response()->json([
+                            'title' => 'TRAE UN LISTADO DE MUNICIPIOS CON ESTADO ACTIVO E INACTIVO',
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
@@ -95,12 +134,14 @@ class MunicipiosController extends Controller
 
                     if($result->count() > 0){
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO COMPLETO DE MUNICIPIOS SIN CONDICIONES',
+                            'success' => true,
                             'data' => $result
                         ]);
                     }else{
                         return response()->json([
-                            'code' => 200,
+                            'title' => 'TRAE UN LISTADO COMPLETO DE MUNICIPIOS SIN CONDICIONES',
+                            'success' => false,
                             'data' => 'No Se Encontraron Registros!!!'
                         ]);
                     }
